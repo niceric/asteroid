@@ -18,7 +18,7 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
-    
+
     Shot.containers = (shots, updateable, drawable)
     Player.containers = (updateable, drawable)
     Asteroid.containers = (asteroids, updateable, drawable)
@@ -28,7 +28,7 @@ def main():
     asteroidfield = AsteroidField()
 
     while running: 
-        print(dt)
+        #print(dt)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
@@ -39,6 +39,10 @@ def main():
             if asteroid.collision_check(player) == True:
                 print("Game Over!")
                 return
+            for shot in shots:
+                if asteroid.collision_check(shot) == True:
+                    shot.kill()
+                    asteroid.split()
         for sprite in drawable:
             sprite.draw(screen)
         #player.draw(screen)
